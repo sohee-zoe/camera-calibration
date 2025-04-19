@@ -36,10 +36,10 @@ python stream_camera.py --source usb --camera_index 0 --calibration --parameter 
 python stream_camera.py --source udp --udp_id <udp_ip> --udp_port <udp_port> --calibration --parameter camera_param.yaml
 ```
 
-* 오른손 좌표계
-  * X축 (R): 오른쪽 (+)
-  * Y축 (G): 아래 (+)
-  * Z축 (B): 전방 / 카메라 바깥 방향 (+)
-
 ![detect_aruco.jpg](images/detect_aruco.jpg)
 
+
+
+---
+![camera-aruco-coords.png](images/camera-aruco-coords.png)
+![aruco-axis.png](images/aruco-axis.png)

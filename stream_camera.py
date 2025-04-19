@@ -65,6 +65,32 @@ def to_rot(rvec):
     rz = round(np.rad2deg(rvec[2][0]), 2)
     return rx, ry, rz
 
+def draw_custom_axes(image, K, D, rvec, tvec, length=0.05):
+    # 좌표계 기준점
+    origin = np.array([[0, 0, 0]], dtype=np.float32)
+    x_axis = np.array([[length, 0, 0]], dtype=np.float32)
+    y_axis = np.array([[0, length, 0]], dtype=np.float32)
+    z_axis = np.array([[0, 0, length]], dtype=np.float32)
+
+    # 3D → 2D 변환
+    imgpts_origin, _ = cv2.projectPoints(origin, rvec, tvec, K, D)
+    imgpts_x, _ = cv2.projectPoints(x_axis, rvec, tvec, K, D)
+    imgpts_y, _ = cv2.projectPoints(y_axis, rvec, tvec, K, D)
+    imgpts_z, _ = cv2.projectPoints(z_axis, rvec, tvec, K, D)
+
+    p_origin = tuple(imgpts_origin[0].ravel().astype(int))
+    p_x = tuple(imgpts_x[0].ravel().astype(int))
+    p_y = tuple(imgpts_y[0].ravel().astype(int))
+    p_z = tuple(imgpts_z[0].ravel().astype(int))
+
+    # 선 그리기 (BGR 순서)
+    cv2.line(image, p_origin, p_x, (0, 0, 255), 3)  # X - 빨강
+    cv2.line(image, p_origin, p_y, (0, 255, 0), 3)  # Y - 초록
+    cv2.line(image, p_origin, p_z, (255, 0, 0), 3)  # Z - 파랑
+
+    return image
+
+
 def detect_aruco(frame, K=None, D=None, aruco_type="DICT_6X6_250", aruco_length=0.035):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     aruco_dict = cv2.aruco.getPredefinedDictionary(ARUCO_DICT[aruco_type])
@@ -94,6 +120,7 @@ def detect_aruco(frame, K=None, D=None, aruco_type="DICT_6X6_250", aruco_length=
                 if success:
                     # 좌표축 그리기
                     cv2.drawFrameAxes(frame, K, D, rvec, tvec, aruco_length * 0.5)
+                    # frame = draw_custom_axes(frame, K, D, rvec, tvec, length=aruco_length * 0.5)
 
                     r = rvec.flatten()
                     t = tvec.flatten()
