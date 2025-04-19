@@ -31,9 +31,13 @@ python camera_calibration.py --size 8x6 --square 0.025
 
 # 4. 아르코 마커로 확인
 ```bash
-python stream_camera.py --source usb --camera_index 0 --calibration --parameter camera_param.yaml
+python stream_camera.py --source usb --camera_index 0 \
+                        --calibration --parameter camera_param.yaml \
+                        --aruco_type DICT_6X6_250 --aruco_length 0.035
 # or
-python stream_camera.py --source udp --udp_id <udp_ip> --udp_port <udp_port> --calibration --parameter camera_param.yaml
+python stream_camera.py --source udp --udp_id <udp_ip> --udp_port <udp_port> \
+                        --calibration --parameter camera_param.yaml \
+                        --aruco_type DICT_6X6_250 --aruco_length 0.035       
 ```
 
 ![detect_aruco.jpg](images/detect_aruco.jpg)
