@@ -12,26 +12,15 @@ def setup_criteria() -> Tuple[int, int, float]:
     return (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
 
-# def setup_object_points(
-#         num_corners_x: int,
-#         num_corners_y: int,
-#         square_size: float
-# ) -> np.ndarray:
-#     """3D 월드 좌표계 포인트 생성"""
-#     objp = np.zeros((num_corners_x * num_corners_y, 3), np.float32)
-#     # (세로, 가로) 순서로 mgrid 생성
-#     objp[:, :2] = np.mgrid[0:num_corners_y, 0:num_corners_x].T.reshape(-1, 2)
-#     return objp * square_size
-
 def setup_object_points(
         num_corners_x: int,
         num_corners_y: int,
         square_size: float
 ) -> np.ndarray:
+    """3D 월드 좌표계 포인트 생성"""
     objp = np.zeros((num_corners_x * num_corners_y, 3), np.float32)
     objp[:, :2] = np.mgrid[0:num_corners_x, 0:num_corners_y].T.reshape(-1, 2)
     return objp * square_size
-
 
 
 def process_images(
@@ -59,7 +48,8 @@ def process_images(
             corners_refined = cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
             image_points.append(corners_refined)
             object_points.append(objp.copy())
-            # 시각화 (필요시 주석 해제)
+
+            # 시각화
             cv2.drawChessboardCorners(img, pattern_size, corners_refined, success)
             cv2.imshow("Detected Pattern", img)
             cv2.waitKey(200)
@@ -107,11 +97,11 @@ def main():
     parser.add_argument("--size",
                         type=lambda s: tuple(map(int, s.split('x'))),
                         default=(8, 6),
-                        help="체스판 코너 개수 (가로x세로), 예: 8x6")
+                        help="체커보드 코너 개수 (가로x세로), 예: 8x6")
     parser.add_argument("--square",
                         type=float,
                         default=0.025, # 25 mm
-                        help="체스판 한 칸의 실제 크기(미터 단위)")
+                        help="체커보드 한 칸의 실제 크기(미터 단위)")
     parser.add_argument("--path",
                         type=str,
                         default="./frames",

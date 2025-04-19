@@ -17,6 +17,7 @@ python stream_camera.py --source udp --udp_id <udp_ip> --udp_port <udp_port>
 
 
 # 3. 캘리브레이션 실행
+`camera_param.yaml`에 저장
 ```bash
 python camera_calibration.py --size 8x6 --square 0.025
 
