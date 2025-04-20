@@ -99,9 +99,13 @@ def detect_aruco(frame, K=None, D=None, aruco_type="DICT_6X6_250", aruco_length=
     corners, ids, rejected = detector.detectMarkers(gray)
 
     if ids is not None:
-        cv2.aruco.drawDetectedMarkers(frame, corners, ids)
+        if K is None and D is None:
+            cv2.aruco.drawDetectedMarkers(frame, corners, ids)
+        # cv2.aruco.drawDetectedMarkers(frame, corners, None, borderColor=(0, 200, 200))
 
         if K is not None and D is not None:
+            cv2.aruco.drawDetectedMarkers(frame, corners, None)
+
             for i, corner in enumerate(corners):
                 # 마커의 3D 좌표 (시계방향, 기준: 중심 (0,0,0))
                 obj_points = np.array([
