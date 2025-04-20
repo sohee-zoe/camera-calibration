@@ -1,6 +1,6 @@
 # 0. 패키지 설치
 ```bash
-pip install opencv-contrib-python opencv-python pyyaml
+pip install opencv-contrib-python opencv-python pyyaml numpy
 ```
 
 # 1. 캘리브레이션할 카메라 실행
