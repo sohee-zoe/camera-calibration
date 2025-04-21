@@ -29,7 +29,11 @@ def process_images(
         criteria: Tuple[int, int, float],
         objp: np.ndarray
 ) -> Tuple[List[np.ndarray], List[np.ndarray], Tuple[int, int]]:
-    images = glob.glob(os.path.join(path, "*.jpg"))
+    globs = ['*.jpg', '*.png', '*.jpeg', '*.JPG', '*.PNG']
+    images = []
+    for ext in globs:
+        images += glob.glob(os.path.join(path, ext))
+        
     if not images:
         raise FileNotFoundError(f"No JPG images found in {path}")
 
