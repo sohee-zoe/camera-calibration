@@ -7,7 +7,7 @@ pip install opencv-contrib-python opencv-python pyyaml numpy
 ```bash
 python stream_camera.py --source usb --camera_index 0
 # or
-python stream_camera.py --source udp --udp_id <udp_ip> --udp_port <udp_port>
+python stream_camera.py --source udp --udp_ip <udp_ip> --udp_port <udp_port>
 ```
 ![run_camera.png](images/run_camera.png)
 
@@ -35,7 +35,7 @@ python stream_camera.py --source usb --camera_index 0 \
                         --calibration --parameter camera_param.yaml \
                         --aruco_type DICT_6X6_250 --aruco_length 0.035
 # or
-python stream_camera.py --source udp --udp_id <udp_ip> --udp_port <udp_port> \
+python stream_camera.py --source udp --udp_ip <udp_ip> --udp_port <udp_port> \
                         --calibration --parameter camera_param.yaml \
                         --aruco_type DICT_6X6_250 --aruco_length 0.035       
 ```
